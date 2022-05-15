@@ -8,6 +8,7 @@
     "ethers": "^5.5.2"
   },
   "dependencies": {
+    "@nomiclabs/hardhat-etherscan": "^3.0.3",
     "bytes32": "^0.0.3",
     "keccak256": "^1.0.6"
   }
