@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
+    "@openzeppelin/contracts": "^4.8.2",
     "bytes32": "^0.0.3",
     "keccak256": "^1.0.6"
   }

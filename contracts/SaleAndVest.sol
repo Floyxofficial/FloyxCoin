@@ -3,15 +3,13 @@ pragma solidity 0.8.9;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "./AccessProtected.sol";
+import "./access/AccessProtected.sol";
 import "./IFloyx.sol";
 
-// 3333, 2866, "0xd9145CCE52D386f254917e481eB44e9943F39138", 1000000000000000000000000, "0xd9145CCE52D386f254917e481eB44e9943F39138","0xd9145CCE52D386f254917e481eB44e9943F39138","0x5B38Da6a701c568545dCfcB03FcB875f56beddC4",1677305407,1000000000000000000000000
+// 2866, 3333, "0x3Cb593f713d8359aB8ee14994B28ad23E7d9fAd1", 9999000000000000000000000, "0x6D3cF7CeF2f6BEff2e1e68D7e9f87CbE5aD258d1","0x94645A8571e6230cE4Bb51F1a0af656Db6d079C9","0x4d23c8E0e601C5e37b062832427b2D62777fAEF9",1677305407,3333000000000000000000000
 
 contract SaleAndVest is ReentrancyGuard, AccessProtected {
     
-    using SafeMath for uint256;
     IFloyx internal _token;
     IERC20 internal _usdc;
     IERC20 internal _usdt;
@@ -32,7 +30,8 @@ contract SaleAndVest is ReentrancyGuard, AccessProtected {
     mapping(address => uint256) public claimCount;
 
     event TokensPurchased(address indexed purchaser, address indexed beneficiary, uint256 value, uint256 amount);
-    event paymentProccessed(address receiver, uint256 amount, bytes info);
+    event PaymentProccessed(address receiver, uint256 amount, bytes info);
+    event RateUpdated(uint256 rate, string currency);
     
     constructor (uint256 rate_,uint256 usdRate_ ,address token_, uint256 icocap_, 
         address usdc, address usdt, address adminWallet, uint256 lockPeriod_, uint256 tokenLimit) Ownable()
@@ -74,11 +73,15 @@ contract SaleAndVest is ReentrancyGuard, AccessProtected {
 
 
     function updateWeiRate(uint256 rate_)public onlyOwner{
+        require(rate_ > 0, "Rate can not be zero");
         weiRate = rate_;
+        emit RateUpdated(rate_, "Native");
     }
 
     function updateUsdRate(uint256 rate_)public onlyOwner{
+        require(rate_ > 0, "Rate can not be zero");
         usdRate = rate_;
+        emit RateUpdated(rate_, "Usd");
     }
 
     function updateLockPeriod(uint256 lockPeriod_)public onlyOwner{
@@ -101,7 +104,7 @@ contract SaleAndVest is ReentrancyGuard, AccessProtected {
         uint256 weiAmount = msg.value;
         uint256 tokens = _getTokenAmount(weiAmount, true);
 
-        weiRaised = weiRaised.add(weiAmount);
+        weiRaised = weiRaised + weiAmount;
         _processPayment(_wallet, msg.value);
         _processPurchase(msg.sender, tokens);
         
@@ -115,15 +118,14 @@ contract SaleAndVest is ReentrancyGuard, AccessProtected {
      * @param usdAmount_ amount of usdc or usdt tokens used to buy floyx.
      * @param usdc boolean variable to check payment will be in usdc or usdt
      */
-    function buyTokenswithUsd(uint256 usdAmount_,bool usdc, bool usdt) public nonReentrant {
-        require(usdc != usdt , "Crowdsale: One of the value should be passed true");
+    function buyTokenswithUsd(uint256 usdAmount_,bool usdc) public nonReentrant {
         require(usdAmount_ > 0 , "Crowdsale: UsdAmount is 0");
         require(!crowdsaleFinalized,"Crowdsale is finalized!");
 
         uint256 tokens = _getTokenAmount(usdAmount_, false);
-        usdRaised = usdRaised.add(usdAmount_);
+        usdRaised = usdRaised + usdAmount_;
 
-        usdc ? _usdc.transferFrom(msg.sender, address(this), usdAmount_) : _usdt.transferFrom(msg.sender, address(this), usdAmount_);
+        usdc ? require(_usdc.transferFrom(msg.sender, address(this), usdAmount_)) : require(_usdt.transferFrom(msg.sender, address(this), usdAmount_));
         _processPurchase(msg.sender, tokens);
         
         emit TokensPurchased(msg.sender, msg.sender, usdAmount_, tokens);
@@ -140,19 +142,19 @@ contract SaleAndVest is ReentrancyGuard, AccessProtected {
         require(claimCount[msg.sender] < 13, "Crowdsale: No more claims left");
 
         // uint256 monthDiff = (block.timestamp.sub(lockPeriod)).div(30 days);
-        uint256 monthDiff = (block.timestamp.sub(lockPeriod)).div(3600);
+        uint256 monthDiff = (block.timestamp - lockPeriod) / 3600;
         require(monthDiff > claimCount[msg.sender], "Crowdsale: Nothing to claim yet");
         if (monthDiff > 13){ monthDiff = 13;}
 
         if (claimCount[msg.sender] == 0){
-            _token.mint(msg.sender, totalTokensPurchased[msg.sender].mul(10).div(100) );
+            _token.mint(msg.sender, (totalTokensPurchased[msg.sender] * 10)/100);
             claimCount[msg.sender] = 1;
         }
 
         for(uint i = claimCount[msg.sender]; i < monthDiff; i ++){
             claimCount[msg.sender] += 1;
-            uint256 tokenAmount = (totalTokensPurchased[msg.sender].mul(75).div(1000));   // release 7.5% of the tokens
-            tokenAmount = tokenAmount.add(tokenAmount.mul(2).div(100));                 // extra 2% reward on every claim
+            uint256 tokenAmount = (totalTokensPurchased[msg.sender] * 75)/ 1000;      // release 7.5% of the tokens
+            tokenAmount = tokenAmount + (tokenAmount * 2)/100;                 // extra 2% reward on every claim
             _token.mint(msg.sender, tokenAmount);
         }
         
@@ -169,12 +171,11 @@ contract SaleAndVest is ReentrancyGuard, AccessProtected {
      * @param tokenAmount Number of tokens to be purchased
      */
     function _processPurchase(address beneficiary, uint256 tokenAmount) internal {
-        require(soldTokens.add(tokenAmount) <= _icoCap , "ICO limit reached");
-        require(totalTokensPurchased[beneficiary].add(tokenAmount) <= userTokenLimit, "User max allocation limit reached");
+        require(soldTokens + tokenAmount <= _icoCap , "ICO limit reached");
+        require(totalTokensPurchased[beneficiary] + tokenAmount <= userTokenLimit, "User max allocation limit reached");
         
-        soldTokens = soldTokens.add(tokenAmount);
-        // _token.transfer(beneficiary, (tokenAmount.mul(10).div(100)));
-        totalTokensPurchased[beneficiary] = totalTokensPurchased[beneficiary].add(tokenAmount);
+        soldTokens = soldTokens + tokenAmount;
+        totalTokensPurchased[beneficiary] = totalTokensPurchased[beneficiary] + tokenAmount;
     }
     
     /**
@@ -184,7 +185,7 @@ contract SaleAndVest is ReentrancyGuard, AccessProtected {
      */
     function _getTokenAmount(uint256 amount, bool eth) internal view returns (uint256) {
         
-        return eth ? amount.mul(weiRate) : amount.mul(usdRate); 
+        return eth ? amount * weiRate : amount * usdRate; 
     }
     
     /**
@@ -196,17 +197,17 @@ contract SaleAndVest is ReentrancyGuard, AccessProtected {
 
     function adminFloyxWithdrawal(uint256 _amount)public onlyOwner {
         require(_token.balanceOf(address(this)) >= _amount, "Contract does not have enough balance");
-        _token.transfer(msg.sender, _amount);
+        require(_token.transfer(msg.sender, _amount), "Transfer failed");
     }
 
     function adminUsdcWithdrawal(uint256 _amount)public onlyOwner {
         require(_usdc.balanceOf(address(this)) >= _amount, "Contract does not have enough balance");
-        _usdc.transfer(msg.sender, _amount);
+        require(_usdc.transfer(msg.sender, _amount), "Transfer failed");
     }
 
     function adminUsdtWithdrawal(uint256 _amount)public onlyOwner {
         require(_usdt.balanceOf(address(this)) >= _amount, "Contract does not have enough balance");
-        _usdt.transfer(msg.sender, _amount);
+        require(_usdt.transfer(msg.sender, _amount), "Transfer failed");
     }
     /**
      * @dev function to transfer matic to recepient account
@@ -216,7 +217,7 @@ contract SaleAndVest is ReentrancyGuard, AccessProtected {
         (bool sent, bytes memory data) = recepient.call{value: amount_}("");
         require(sent, "Failed to send Ether");
         
-        emit paymentProccessed(recepient, amount_, data);
+        emit PaymentProccessed(recepient, amount_, data);
     }
     
 }

@@ -6,14 +6,12 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "./access/AccessProtected.sol";
 
 contract Floyx is ERC20, ERC20Burnable, AccessProtected {
-    uint256 public maxSupply;
+    uint256 public constant MAX_SUPPLY = 45000000000 ether;
 
-    constructor(uint256 maxSupply_) ERC20("Floyx", "FLOYX") {
-        maxSupply = maxSupply_;
-    }
+    constructor() ERC20("Floyx", "FLOYX") {}
 
     function mint(address to, uint256 amount) external onlyAdmin {
-        require(maxSupply>= amount+totalSupply(), "Floyx: Can not exceed max supply" );
+        require(MAX_SUPPLY >= amount+totalSupply(), "Floyx: Can not exceed max supply" );
         _mint(to, amount);
     }
 }

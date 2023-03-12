@@ -1,12 +1,86 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/home/usmanfazil/FloyxCoin/contracts/Context.sol": {
-      "lastModificationDate": 1641508123065,
-      "contentHash": "a06a83834de6f8eb27f6ed608d030ac2",
-      "sourceName": "contracts/Context.sol",
+    "/Users/usmanfazil/Work/FLX/contracts/access/AccessProtected.sol": {
+      "lastModificationDate": 1677186995184,
+      "contentHash": "8a4208e6ed5389e9a5979d887f1734ef",
+      "sourceName": "contracts/access/AccessProtected.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/access/Ownable.sol"
+      ],
+      "versionPragmas": [
+        "0.8.9"
+      ],
+      "artifacts": [
+        "AccessProtected"
+      ]
+    },
+    "/Users/usmanfazil/Work/FLX/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
+      "lastModificationDate": 1678000185986,
+      "contentHash": "e436cea06129be2c73cda4b1acc848b5",
+      "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Ownable"
+      ]
+    },
+    "/Users/usmanfazil/Work/FLX/node_modules/@openzeppelin/contracts/utils/Context.sol": {
+      "lastModificationDate": 1678000185812,
+      "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
+      "sourceName": "@openzeppelin/contracts/utils/Context.sol",
+      "solcConfig": {
+        "version": "0.8.9",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -36,12 +110,12 @@
         "Context"
       ]
     },
-    "/home/usmanfazil/FloyxCoin/contracts/Floyx.sol": {
-      "lastModificationDate": 1641508123065,
-      "contentHash": "3178668f7f48c8d973a58c3790b3fd55",
-      "sourceName": "contracts/Floyx.sol",
+    "/Users/usmanfazil/Work/FLX/contracts/SaleAndVest.sol": {
+      "lastModificationDate": 1678642409377,
+      "contentHash": "e04f4c9b28573450ad99cfbf8c3d52c9",
+      "sourceName": "contracts/SaleAndVest.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.9",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -64,24 +138,24 @@
         }
       },
       "imports": [
-        "./IERC20.sol",
-        "./extensions/IERC20Metadata.sol",
-        "./Context.sol",
-        "./SafeMath.sol"
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/security/ReentrancyGuard.sol",
+        "./access/AccessProtected.sol",
+        "./IFloyx.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "0.8.9"
       ],
       "artifacts": [
-        "Floyx"
+        "SaleAndVest"
       ]
     },
-    "/home/usmanfazil/FloyxCoin/contracts/IERC20.sol": {
-      "lastModificationDate": 1641508123065,
-      "contentHash": "5f4c7678e2e69875dbd2ec01d3d288c1",
-      "sourceName": "contracts/IERC20.sol",
+    "/Users/usmanfazil/Work/FLX/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+      "lastModificationDate": 1678000185963,
+      "contentHash": "ad7c2d0af148c8f9f097d65deeb4da6b",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.9",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -111,12 +185,117 @@
         "IERC20"
       ]
     },
-    "/home/usmanfazil/FloyxCoin/contracts/extensions/IERC20Metadata.sol": {
-      "lastModificationDate": 1641508123065,
-      "contentHash": "5e82817b39b46b54032effefa77b2bd9",
-      "sourceName": "contracts/extensions/IERC20Metadata.sol",
+    "/Users/usmanfazil/Work/FLX/node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol": {
+      "lastModificationDate": 1678000185992,
+      "contentHash": "a8e2d1c30042f64ed89c9d4157eb6cb9",
+      "sourceName": "@openzeppelin/contracts/security/ReentrancyGuard.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ReentrancyGuard"
+      ]
+    },
+    "/Users/usmanfazil/Work/FLX/node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol": {
+      "lastModificationDate": 1678000186012,
+      "contentHash": "2337f0279507b5edf14a07067adf0d05",
+      "sourceName": "@openzeppelin/contracts/utils/math/SafeMath.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "SafeMath"
+      ]
+    },
+    "/Users/usmanfazil/Work/FLX/contracts/IFloyx.sol": {
+      "lastModificationDate": 1677186995185,
+      "contentHash": "750001f146a71f844ba5b837c115fada",
+      "sourceName": "contracts/IFloyx.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.9"
+      ],
+      "artifacts": [
+        "IFloyx"
+      ]
+    },
+    "/Users/usmanfazil/Work/FLX/node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+      "lastModificationDate": 1678000185963,
+      "contentHash": "909ab67fc5c25033fe6cd364f8c056f9",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+      "solcConfig": {
+        "version": "0.8.9",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -148,312 +327,12 @@
         "IERC20Metadata"
       ]
     },
-    "/home/usmanfazil/FloyxCoin/contracts/SafeMath.sol": {
-      "lastModificationDate": 1641508123065,
-      "contentHash": "dcf128fca99b7d6f0746803711fa3f39",
-      "sourceName": "contracts/SafeMath.sol",
+    "/Users/usmanfazil/Work/FLX/node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol": {
+      "lastModificationDate": 1678000185897,
+      "contentHash": "834a0dde221759af42b030253315b086",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
       "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "SafeMath"
-      ]
-    },
-    "/home/usmanfazil/FloyxCoin/contracts/Tokenomics.sol": {
-      "lastModificationDate": 1641508123065,
-      "contentHash": "d4c35f3bbf1b45da8123ff33fcbdc290",
-      "sourceName": "contracts/Tokenomics.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./SafeMath.sol",
-        "./IERC20.sol",
-        "./Ownable.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "FloyxTokenomics"
-      ]
-    },
-    "/home/usmanfazil/FloyxCoin/contracts/Ownable.sol": {
-      "lastModificationDate": 1641508123065,
-      "contentHash": "d312e87b951e03a2e9e4f5d7dca3ce3b",
-      "sourceName": "contracts/Ownable.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./Context.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "Ownable"
-      ]
-    },
-    "/home/usmanfazil/FloyxCoin/contracts/RewardDistribution.sol": {
-      "lastModificationDate": 1641508123065,
-      "contentHash": "f22723b2ef0bd2e1a741229ea4ded90d",
-      "sourceName": "contracts/RewardDistribution.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./Ownable.sol",
-        "./IERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "RewardDistribution"
-      ]
-    },
-    "/home/usmanfazil/FloyxCoin/contracts/Dividend.sol": {
-      "lastModificationDate": 1641508123065,
-      "contentHash": "3ec7aebefc70c9f2d0de7ab67c79ebac",
-      "sourceName": "contracts/Dividend.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./Ownable.sol",
-        "./IERC20.sol",
-        "./SafeMath.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "Dividend"
-      ]
-    },
-    "/home/usmanfazil/FloyxCoin/contracts/IERC20Mintable.sol": {
-      "lastModificationDate": 1651498554309,
-      "contentHash": "6444616c98cc1a4f999504d28e8754cd",
-      "sourceName": "contracts/IERC20Mintable.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./IERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC20Mintable"
-      ]
-    },
-    "/home/usmanfazil/FloyxCoin/contracts/ICOCrowdsale.sol": {
-      "lastModificationDate": 1651785729127,
-      "contentHash": "43e46a1f542addd53a3cb93c71c06a82",
-      "sourceName": "contracts/ICOCrowdsale.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./IERC20.sol",
-        "./ReentrancyGuard.sol",
-        "./SafeMath.sol",
-        "./Ownable.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ICOTokenCrowdsale"
-      ]
-    },
-    "/home/usmanfazil/FloyxCoin/contracts/ReentrancyGuard.sol": {
-      "lastModificationDate": 1651498597092,
-      "contentHash": "27e3839c172c95e80b0bb53bf9d3f01f",
-      "sourceName": "contracts/ReentrancyGuard.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ReentrancyGuard"
-      ]
-    },
-    "/home/usmanfazil/FloyxCoin/contracts/Token.sol": {
-      "lastModificationDate": 1651694186438,
-      "contentHash": "338d1193b7b91316f707c3ba3654ec66",
-      "sourceName": "contracts/Token.sol",
-      "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.9",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -478,22 +357,21 @@
       "imports": [
         "./IERC20.sol",
         "./extensions/IERC20Metadata.sol",
-        "./Context.sol",
-        "./SafeMath.sol"
+        "../../utils/Context.sol"
       ],
       "versionPragmas": [
         "^0.8.0"
       ],
       "artifacts": [
-        "Token"
+        "ERC20"
       ]
     },
-    "/home/usmanfazil/FloyxCoin/contracts/funkid.sol": {
-      "lastModificationDate": 1652176732349,
-      "contentHash": "2e53f60f1d781c0aaa3f46543304af79",
-      "sourceName": "contracts/funkid.sol",
+    "/Users/usmanfazil/Work/FLX/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol": {
+      "lastModificationDate": 1678000185897,
+      "contentHash": "a1c7f80ae26f5b2d7d563475627fbf25",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol",
       "solcConfig": {
-        "version": "0.8.4",
+        "version": "0.8.9",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -516,13 +394,53 @@
         }
       },
       "imports": [
-        "./Ownable.sol"
+        "../ERC20.sol",
+        "../../../utils/Context.sol"
       ],
       "versionPragmas": [
         "^0.8.0"
       ],
       "artifacts": [
-        "FunKid"
+        "ERC20Burnable"
+      ]
+    },
+    "/Users/usmanfazil/Work/FLX/contracts/Floyx.sol": {
+      "lastModificationDate": 1678640156321,
+      "contentHash": "6d6e976faa358dbe08075240a0bdb9e0",
+      "sourceName": "contracts/Floyx.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol",
+        "./access/AccessProtected.sol"
+      ],
+      "versionPragmas": [
+        "0.8.9"
+      ],
+      "artifacts": [
+        "Floyx"
       ]
     }
   }
